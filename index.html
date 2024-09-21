@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descarga Exclusiva</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <img src="IMG/logo.png" alt="Logo del sitio" class="logo">
+        <h1>Descarga Exclusiva</h1>
+        <p>Haz clic en el botón para abrir los enlaces y luego descargar tu archivo.</p>
+        <button id="openLinksBtn" class="btn primary" onclick="openLinks()">🔗 Abrir enlaces</button>
+        <button id="downloadBtn" class="btn secondary" onclick="downloadFile()" disabled>⬇️ Descargar archivo</button>
+        <div id="downloadStatus" class="status hidden">
+            <p>Archivo descargado correctamente.</p>
+            <button id="openFileBtn" class="btn open-file" onclick="openFile()">📂 Abrir archivo</button>
+        </div>
+    </div>
+
+    <script>
+        // Función para abrir los enlaces
+        function openLinks() {
+            window.open('https://noohapou.com/4/8132148', '_blank');
+            setTimeout(function() {
+                window.open('https://noohapou.com/4/8132148', '_blank');
+                document.getElementById('downloadBtn').disabled = false;
+                document.getElementById('openLinksBtn').disabled = true;
+            }, 500); // Abre el segundo enlace después de medio segundo
+        }
+
+        // Función para descargar el archivo
+        function downloadFile() {
+            const link = document.createElement('a');
+            link.href = 'Download/macrox.zip';  // Ruta del archivo en la carpeta Download
+            link.download = 'macrox.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            document.getElementById('downloadStatus').classList.remove('hidden');
+            document.getElementById('downloadBtn').disabled = true;
+        }
+
+        // Función para abrir el archivo descargado
+        function openFile() {
+            alert('Abre el archivo descargado desde tu gestor de archivos.');
+        }
+    </script>
+</body>
+</html>
