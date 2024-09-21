@@ -4,49 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Descarga Exclusiva</title>
-    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Integración de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:disabled {
+            background-color: #a9d3ff;
+        }
+
+        .btn-secondary {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-secondary:disabled {
+            background-color: #a9e1bc;
+        }
+
+        /* Estilos de la notificación de descarga */
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            display: none;
+            transition: 0.3s ease;
+        }
+
+        .status.show {
+            display: block;
+            background-color: #e2f7e2; /* Verde claro para éxito */
+            border-color: #28a745;
+        }
+
+        .status p {
+            margin: 0;
+            font-size: 16px;
+            color: #28a745;
+        }
+
+        .status i {
+            margin-right: 8px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <img src="IMG/logo.png" alt="Logo del sitio" class="logo">
-        <h1>Descarga Exclusiva</h1>
-        <p>Haz clic en el botón para abrir los enlaces y luego descargar tu archivo.</p>
-        <button id="openLinksBtn" class="btn primary" onclick="openLinks()">🔗 Abrir enlaces</button>
-        <button id="downloadBtn" class="btn secondary" onclick="downloadFile()" disabled>⬇️ Descargar archivo</button>
-        <div id="downloadStatus" class="status hidden">
-            <p>Archivo descargado correctamente.</p>
-            <button id="openFileBtn" class="btn open-file" onclick="openFile()">📂 Abrir archivo</button>
-        </div>
+
+<div class="container">
+    <img src="IMG/logo.png" alt="Logo del sitio">
+    <h1>Descarga Exclusiva</h1>
+    <p>Haz clic en el botón para abrir los enlaces y luego descargar tu archivo.</p>
+    
+    <!-- Botones con iconos de Font Awesome -->
+    <button id="openLinksBtn" class="btn btn-primary" onclick="openLinks()">
+        <i class="fas fa-link"></i> Abrir enlaces
+    </button>
+    <button id="downloadBtn" class="btn btn-secondary" onclick="downloadFile()" disabled>
+        <i class="fas fa-download"></i> Descargar archivo
+    </button>
+    
+    <!-- Notificación de descarga con mejor diseño -->
+    <div id="downloadStatus" class="status">
+        <p><i class="fas fa-check-circle"></i> Archivo descargado correctamente.</p>
+        <button id="openFileBtn" class="btn btn-secondary" onclick="openFile()">
+            <i class="fas fa-folder-open"></i> Abrir archivo
+        </button>
     </div>
+</div>
 
-    <script>
-        // Función para abrir los enlaces
-        function openLinks() {
+<script>
+    function openLinks() {
+        // Abrir el primer enlace
+        window.open('https://noohapou.com/4/8132148', '_blank');
+        
+        // Abrir el segundo enlace después de un retraso
+        setTimeout(function() {
             window.open('https://noohapou.com/4/8132148', '_blank');
-            setTimeout(function() {
-                window.open('https://noohapou.com/4/8132148', '_blank');
-                document.getElementById('downloadBtn').disabled = false;
-                document.getElementById('openLinksBtn').disabled = true;
-            }, 500); // Abre el segundo enlace después de medio segundo
-        }
+            
+            // Habilitar el botón de descarga
+            document.getElementById('downloadBtn').disabled = false;
+            // Deshabilitar el botón de abrir enlaces
+            document.getElementById('openLinksBtn').disabled = true;
+        }, 500); // Retraso de medio segundo
+    }
 
-        // Función para descargar el archivo
-        function downloadFile() {
-            const link = document.createElement('a');
-            link.href = 'Download/macrox.zip';  // Ruta del archivo en la carpeta Download
-            link.download = 'macrox.zip';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+    function downloadFile() {
+        // Crear un enlace de descarga dinámico
+        const link = document.createElement('a');
+        link.href = 'Download/macrox.zip'; // Asegúrate de que la ruta sea correcta
+        link.download = 'macrox.zip'; 
+        link.click(); // Ejecutar la descarga
 
-            document.getElementById('downloadStatus').classList.remove('hidden');
-            document.getElementById('downloadBtn').disabled = true;
-        }
+        // Mostrar el mensaje de descarga completa
+        document.getElementById('downloadStatus').classList.add('show');
 
-        // Función para abrir el archivo descargado
-        function openFile() {
-            alert('Abre el archivo descargado desde tu gestor de archivos.');
-        }
-    </script>
+        // Deshabilitar el botón de descarga
+        document.getElementById('downloadBtn').disabled = true;
+    }
+
+    function openFile() {
+        alert('Puedes abrir el archivo descargado desde el gestor de archivos de tu dispositivo.');
+    }
+</script>
+
 </body>
 </html>
